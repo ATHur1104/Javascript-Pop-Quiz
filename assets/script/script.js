@@ -97,6 +97,16 @@ function showQuestion() {
   }
 }
 
+let prevQuestion = [];
+function questionCheck() {
+  const usedQuestion = quiz[currentQuestion].question.join(' ');
+  if (prevQuestion.includes(usedQuestion)) {
+    return false;
+  } else {
+    prevQuestion.push(usedQuestion);
+    return true;
+  }
+}
 
 
 function handleAnswerClick() {
