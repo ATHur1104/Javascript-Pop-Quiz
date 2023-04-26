@@ -1,0 +1,29 @@
+#card {
+    background: linear-gradient(to bottom, #FFDAB9, #FFB6C1, #87CEEB); /* use linear gradient to create a gradient from top to bottom with three colors */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+    color: #333; 
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  
+  #answer {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #answer button {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 16px;
+    background-color: white;
+    border: 1px solid #333;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  #answer button:hover {
+    background-color: #333;
+    color: white;
+  }
