@@ -98,9 +98,11 @@ function handleAnswerClick(event) {
   if (correctAns.includes(selectedOption)) {
     document.getElementById("check").textContent="Correct!";
     // add score +5 and update score
+    // add timer so that this will diplay none after 3 seconds
     } else {
     document.getElementById("check").textContent="Wrong!";
     // add score -1 and update score
+    // add timer so that this will diplay none after 3 seconds
     }
     ;
     
@@ -116,6 +118,8 @@ function handleAnswerClick(event) {
 var startBtn = document.getElementById("start-btn")
 var highScoreBtn = document.getElementById("high-score-btn")
 startBtn.addEventListener("click", startQuiz);
+  var timerEl = document.getElementById("timer");
+
 
 function startQuiz() {
   startBtn.style.display = "none";
@@ -123,7 +127,20 @@ function startQuiz() {
   document.getElementById("question").style.display = "flex";
   document.getElementById("answer").style.display = "flex";
   showQuestion();
-  // add a timer that goes down and when it reaches zero have it say "you ran out of time!"
+  
+  var timeleft = 75;
+  timerEl.textContent = timeleft + " Seconds left";
+
+  var timerInterval = setInterval(function() {
+    timeleft--;
+    timerEl.textContent = timeleft + " Seconds left"
+    if (timeleft <= 0) {
+      clearInterval(timerInterval);
+      timerEl.textContent = "Time's Up!";
+      document.getElementById("question").textContent = "You ran out of time!"
+      document.getElementById("answer").style.display = "none";
+    }
+  }, 1000);  
 }
 
 // Add high score list that saves to memory and will display the leader board
