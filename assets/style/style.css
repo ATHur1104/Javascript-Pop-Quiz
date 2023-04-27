@@ -4,9 +4,9 @@
     border-radius: 10px;
     box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
     color: #333; 
-    font-size: 16px;
+    font-size: 26px;
     line-height: 1.5;
-  }
+    }
   
   #answer {
     display: flex;
@@ -16,7 +16,7 @@
   #answer button {
     margin: 10px 0;
     padding: 10px;
-    font-size: 16px;
+    font-size: 20px;
     background-color: white;
     border: 1px solid #333;
     border-radius: 5px;
@@ -26,4 +26,26 @@
   #answer button:hover {
     background-color: #333;
     color: white;
+  }
+
+  #check {
+    font-size: 30px;
+    text-align: center;
+    padding-top: 1em;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  #score,
+  #timer {
+    font-size: 14px;
+  }
+
+  #start button,
+  #high-score button {
+    font-size: 100%;
+    box-sizing: content-box;
+    width: 100%;
   }

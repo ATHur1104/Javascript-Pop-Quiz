@@ -1,22 +1,3 @@
-// WHEN I click the start button
-// addEventListener
-// THEN a timer starts and I am presented with a question
-// WHEN I answer a question
-// THEN I am presented with another question
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and my score
-
-// when i press play i get a question and 4 answers to choose from
-
-// when i select an answer button it will tell me if it was correct or incorrect
-
-// I want to keep a running tally of correct and incorrect answers
-
-// var quiz = //putting the quiz together so that the answer is correct from the question asked
 var quiz = [
   {
     question: "Which one of these is a primitive data type?",
@@ -70,7 +51,9 @@ var quiz = [
   }
 ];
 
-var currentQuestion = [Math.floor(Math.random() * quiz.length)];
+var currentQuestion = 0;
+document.getElementById("question").style.display = "none";
+document.getElementById("answer").style.display = "none";
 
 function showQuestion() {
   var questionEl = document.getElementById("question");
@@ -95,7 +78,8 @@ function showQuestion() {
     answerEl[i].textContent = quizArray[i];
     answerEl[i].addEventListener("click", handleAnswerClick);
   }
-}
+  }
+
 
 let prevQuestion = [];
 function questionCheck() {
@@ -108,15 +92,35 @@ function questionCheck() {
   }
 }
 
+function handleAnswerClick(event) {
+  var selectedOption = event.target.textContent;
+  var correctAns = quiz[currentQuestion].answer;
+  if (correctAns.includes(selectedOption)) {
+    document.getElementById("check").textContent="Correct!";
+    // add score +5 and update score
+    } else {
+    document.getElementById("check").textContent="Wrong!";
+    // add score -1 and update score
+    }
+    ;
+    
+    if (currentQuestion < quiz.length -1){
+        currentQuestion++;
+        showQuestion();
+      } else {
+        document.getElementById("question").textContent = "Finished!";
+        document.getElementById("answer").style.display = "none";
+      }
+    }
+var startBtn = document.getElementById("start-btn")
+var highScoreBtn = document.getElementById("high-score-btn")
+startBtn.addEventListener("click", startQuiz);
 
-function handleAnswerClick() {
-
+function startQuiz() {
+  startBtn.style.display = "none";
+  highScoreBtn.style.display = "none";
+  document.getElementById("question").style.display = "flex";
+  document.getElementById("answer").style.display = "flex";
+  showQuestion();
 }
-showQuestion();
 
-// var wrong: //answers from other questions using randomizer
-
-
-
-// random question selected w/ correct answer and 3 random answers from another question
-// 
