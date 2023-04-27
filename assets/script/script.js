@@ -110,6 +110,7 @@ function handleAnswerClick(event) {
       } else {
         document.getElementById("question").textContent = "Finished!";
         document.getElementById("answer").style.display = "none";
+        // need to add input to add name and score values
       }
     }
 var startBtn = document.getElementById("start-btn")
@@ -122,5 +123,7 @@ function startQuiz() {
   document.getElementById("question").style.display = "flex";
   document.getElementById("answer").style.display = "flex";
   showQuestion();
+  // add a timer that goes down and when it reaches zero have it say "you ran out of time!"
 }
 
+// Add high score list that saves to memory and will display the leader board
