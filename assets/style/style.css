@@ -38,13 +38,18 @@
     text-align: center;
   }
 
+  header {
+    display: flex;
+    justify-content: space-between;
+  }
+
   #score,
   #timer {
     font-size: 20px;
   }
 
   #start button,
-  #high-score button {
+  #score button {
     font-size: 100%;
     box-sizing: content-box;
     width: 100%;
