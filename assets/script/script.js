@@ -1,3 +1,9 @@
+var startBtn = document.getElementById("start-btn")
+var highScoreBtn = document.getElementById("score-btn")
+startBtn.addEventListener("click", startQuiz);
+var timerEl = document.getElementById("timer");
+var scoreEl = document.getElementById("score");
+
 var quiz = [
   {
     question: "Which one of these is a primitive data type?",
@@ -91,35 +97,66 @@ function questionCheck() {
     return true;
   }
 }
+score = 0;
+
 
 function handleAnswerClick(event) {
   var selectedOption = event.target.textContent;
   var correctAns = quiz[currentQuestion].answer;
   if (correctAns.includes(selectedOption)) {
     document.getElementById("check").textContent="Correct!";
-    // add score +5 and update score
-    // add timer so that this will diplay none after 3 seconds
+    score += 10;
+    setTimeout(function() {
+      document.getElementById("check").textContent="";
+    }, 2000);
+
     } else {
     document.getElementById("check").textContent="Wrong!";
-    // add score -1 and update score
-    // add timer so that this will diplay none after 3 seconds
+    score -= 5;
+    setTimeout(function() {
+      document.getElementById("check").textContent="";
+    }, 2000);
+
     }
-    ;
-    
+    scoreEl.textContent = "Score: " + score;
+
     if (currentQuestion < quiz.length -1){
         currentQuestion++;
         showQuestion();
       } else {
         document.getElementById("question").textContent = "Finished!";
         document.getElementById("answer").style.display = "none";
-        // need to add input to add name and score values
-      }
-    }
-var startBtn = document.getElementById("start-btn")
-var highScoreBtn = document.getElementById("high-score-btn")
-startBtn.addEventListener("click", startQuiz);
-  var timerEl = document.getElementById("timer");
+        // this chunk is not working
+        var container = document.createElement("div");
+        container.setAttribute("id", "container");
+        document.getElementById("quiz").appendChild(container);
+        var input = document.createElement("input");
+        input.setAttribute("type", "text");
+        input.setAttribute("id", "initials");
+        input.setAttribute("placeholder", "Enter Your Initials")
+        var scoreDisplay = document.createElement("div");
+        scoreDisplay.textContent = "Score" + score;
+        container.appendChild(input);
+        container.appendChild(scoreDisplay);
+        // to here
+        
+      var startBtn = document.createElement("button");
+      startBtn.setAttribute("id", "startBtn");
+      startBtn.textContent = "Try Again?"
+      startBtn.addEventListener("click", function() {
+        location.reload();
+      });
+      document.getElementById("quiz").appendChild(startBtn);
 
+      var highScoreBtn = document.createElement("button");
+      highScoreBtn.setAttribute("id", "highscoreBtn");
+      highScoreBtn.textContent = "View High Scores";
+      highScoreBtn.addEventListener("click", function() {
+        // need to make a highscore element here
+      });
+      document.getElementById("quiz").appendChild(highScoreBtn);
+      }
+    };
 
 function startQuiz() {
   startBtn.style.display = "none";
@@ -129,18 +166,23 @@ function startQuiz() {
   showQuestion();
   
   var timeleft = 75;
-  timerEl.textContent = timeleft + " Seconds left";
+  timerEl.textContent = "Time: " + timeleft + " Seconds left";
 
   var timerInterval = setInterval(function() {
     timeleft--;
-    timerEl.textContent = timeleft + " Seconds left"
+    timerEl.textContent = "Time: " + timeleft + " Seconds left"
     if (timeleft <= 0) {
       clearInterval(timerInterval);
       timerEl.textContent = "Time's Up!";
       document.getElementById("question").textContent = "You ran out of time!"
       document.getElementById("answer").style.display = "none";
+    } if 
+    (currentQuestion === 9) {
+      clearInterval(timerInterval)
+      timerEl.textContent = ""
     }
   }, 1000);  
 }
 
 // Add high score list that saves to memory and will display the leader board
+// create ul li elements for highscore save to memory and return when the 
