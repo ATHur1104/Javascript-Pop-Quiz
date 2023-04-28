@@ -186,7 +186,7 @@ function startQuiz() {
   showQuestion();
 
 
-  var timeleft = 5;
+  var timeleft = 75;
   timerEl.textContent = "Time: " + timeleft + " Seconds left";
 
   var timerInterval = setInterval(function () {
