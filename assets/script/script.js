@@ -4,6 +4,21 @@ startBtn.addEventListener("click", startQuiz);
 var timerEl = document.getElementById("timer");
 var scoreEl = document.getElementById("score");
 
+highScoreBtn.addEventListener("click", function() {
+  var savedData = JSON.parse(localStorage.getItem("savedData")) || [];
+
+  if (savedData.length > 0) {
+    var highScoresString = "HIGH SCORES:\n\n";
+    for (var i = 0; i < savedData.length; i++) {
+      var item = savedData[i];
+      highScoresString += item.name + ": " + item.score + "\n";
+    }
+    alert(highScoresString);
+  } else {
+    alert("There are no high scores yet!");
+  }
+});
+
 var quiz = [
   {
     question: "Which one of these is a primitive data type?",
@@ -84,7 +99,7 @@ function showQuestion() {
     answerEl[i].textContent = quizArray[i];
     answerEl[i].addEventListener("click", handleAnswerClick);
   }
-  }
+}
 
 
 let prevQuestion = [];
@@ -104,74 +119,77 @@ function handleAnswerClick(event) {
   var selectedOption = event.target.textContent;
   var correctAns = quiz[currentQuestion].answer;
   if (correctAns.includes(selectedOption)) {
-    document.getElementById("check").textContent="Correct!";
+    document.getElementById("check").textContent = "Correct!";
     score += 10;
-    setTimeout(function() {
-      document.getElementById("check").textContent="";
+    setTimeout(function () {
+      document.getElementById("check").textContent = "";
     }, 2000);
 
-    } else {
-    document.getElementById("check").textContent="Wrong!";
+  } else {
+    document.getElementById("check").textContent = "Wrong!";
     score -= 5;
-    setTimeout(function() {
-      document.getElementById("check").textContent="";
+    setTimeout(function () {
+      document.getElementById("check").textContent = "";
     }, 2000);
 
+  }
+  scoreEl.textContent = "Score: " + score;
+
+  if (currentQuestion < quiz.length - 1) {
+    currentQuestion++;
+    showQuestion();
+  } else {
+    var container = document.createElement("div");
+    container.setAttribute("id", "container");
+    document.getElementById("card").appendChild(container);
+
+    document.getElementById("answer").style.display = "none";
+    document.getElementById("question").style.display = "none";
+
+    let name = prompt("You got " + score + " please enter your name")
+    var savedName = name;
+    var savedScore = score;
+    startBtn.style.display = "inline-block";
+    highScoreBtn.style.display = "inline-block";
+
+    var savedData = JSON.parse(localStorage.getItem("savedData")) || [];
+    savedData.push({ name: savedName, score: savedScore });
+    savedData.sort(function(a, b) {
+      return b.score - a.score;
+    });
+    localStorage.setItem("savedData", JSON.stringify(savedData));
+
+
+    for (var i = 0; i < savedData.length; i++) {
+      var item = savedData[i];
+      var listItem = document.createElement("li");
+      listItem.textContent = item.name + ": " + item.score;
+      document.getElementById("highScoresList").appendChild(listItem);
     }
-    scoreEl.textContent = "Score: " + score;
+  }
+};
 
-    if (currentQuestion < quiz.length -1){
-        currentQuestion++;
-        showQuestion();
-      } else {
-        document.getElementById("question").textContent = "Finished!";
-        document.getElementById("answer").style.display = "none";
-        var container = document.createElement("div");
-        container.setAttribute("id", "container");
-        document.getElementById("card").appendChild(container);
-        var input = document.createElement("input");
-        input.setAttribute("type", "text");
-        input.setAttribute("id", "initials");
-        input.setAttribute("placeholder", "Enter Your Initials")
-        var scoreDisplay = document.createElement("div");
-        scoreDisplay.textContent = "Score" + score;
-        container.appendChild(input);
-        container.appendChild(scoreDisplay);
-        // needs a submit button that will save to memory + needs to create values into an array
-        
-      var startBtn = document.createElement("button");
-      startBtn.setAttribute("id", "startBtn");
-      startBtn.textContent = "Try Again?"
-      startBtn.addEventListener("click", function() {
-        location.reload();
-      });
-      document.getElementById("quiz").appendChild(startBtn);
-
-      var highScoreBtn = document.createElement("button");
-      highScoreBtn.setAttribute("id", "highscoreBtn");
-      highScoreBtn.textContent = "View High Scores";
-      highScoreBtn.addEventListener("click", function() {
-        // need to make a highscore element here + needs to pull from memory the array and sort by max
-        // Add high score list that saves to memory and will display the leader board
-        // create ul li elements for highscore save to memory and return when the
-        // needs a back button to go back to start of the quiz
-        // needs a leaderboard wipe
-      });
-      document.getElementById("quiz").appendChild(highScoreBtn);
-      }
-    };
+var scoreObj = {
+  name: savedName,
+  score: savedScore
+};
+var scoreString = JSON.stringify(scoreObj);
+localStorage.setItem("highScore", scoreString);
 
 function startQuiz() {
+  currentQuestion = 0;
   startBtn.style.display = "none";
   highScoreBtn.style.display = "none";
   document.getElementById("question").style.display = "flex";
   document.getElementById("answer").style.display = "flex";
+
   showQuestion();
-  
+
+
   var timeleft = 75;
   timerEl.textContent = "Time: " + timeleft + " Seconds left";
 
-  var timerInterval = setInterval(function() {
+  var timerInterval = setInterval(function () {
     timeleft--;
     timerEl.textContent = "Time: " + timeleft + " Seconds left"
     if (timeleft <= 0) {
@@ -179,10 +197,12 @@ function startQuiz() {
       timerEl.textContent = "Time's Up!";
       document.getElementById("question").textContent = "You ran out of time!"
       document.getElementById("answer").style.display = "none";
-    } if 
-    (currentQuestion === 9) {
+      document.getElementById("score").textContent = "DNF";
+    } if
+      (currentQuestion === 9) {
       clearInterval(timerInterval)
       timerEl.textContent = ""
     }
-  }, 1000);  
+  }, 1000);
+  document.getElementById("container").style.display = "none";
 }
