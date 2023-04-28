@@ -126,10 +126,9 @@ function handleAnswerClick(event) {
       } else {
         document.getElementById("question").textContent = "Finished!";
         document.getElementById("answer").style.display = "none";
-        // this chunk is not working
         var container = document.createElement("div");
         container.setAttribute("id", "container");
-        document.getElementById("quiz").appendChild(container);
+        document.getElementById("card").appendChild(container);
         var input = document.createElement("input");
         input.setAttribute("type", "text");
         input.setAttribute("id", "initials");
@@ -138,7 +137,7 @@ function handleAnswerClick(event) {
         scoreDisplay.textContent = "Score" + score;
         container.appendChild(input);
         container.appendChild(scoreDisplay);
-        // to here
+        // needs a submit button that will save to memory + needs to create values into an array
         
       var startBtn = document.createElement("button");
       startBtn.setAttribute("id", "startBtn");
@@ -152,7 +151,11 @@ function handleAnswerClick(event) {
       highScoreBtn.setAttribute("id", "highscoreBtn");
       highScoreBtn.textContent = "View High Scores";
       highScoreBtn.addEventListener("click", function() {
-        // need to make a highscore element here
+        // need to make a highscore element here + needs to pull from memory the array and sort by max
+        // Add high score list that saves to memory and will display the leader board
+        // create ul li elements for highscore save to memory and return when the
+        // needs a back button to go back to start of the quiz
+        // needs a leaderboard wipe
       });
       document.getElementById("quiz").appendChild(highScoreBtn);
       }
@@ -183,6 +186,3 @@ function startQuiz() {
     }
   }, 1000);  
 }
-
-// Add high score list that saves to memory and will display the leader board
-// create ul li elements for highscore save to memory and return when the 
