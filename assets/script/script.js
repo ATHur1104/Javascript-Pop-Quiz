@@ -186,7 +186,7 @@ function startQuiz() {
   showQuestion();
 
 
-  var timeleft = 75;
+  var timeleft = 5;
   timerEl.textContent = "Time: " + timeleft + " Seconds left";
 
   var timerInterval = setInterval(function () {
@@ -198,7 +198,9 @@ function startQuiz() {
       document.getElementById("question").textContent = "You ran out of time!"
       document.getElementById("answer").style.display = "none";
       document.getElementById("score").textContent = "DNF";
-    } if
+      startBtn.style.display = "inline-block";
+      highScoreBtn.style.display = "inline-block";
+      } if
       (currentQuestion === 9) {
       clearInterval(timerInterval)
       timerEl.textContent = ""
